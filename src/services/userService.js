@@ -1,11 +1,10 @@
 import jwtDecode from "jwt-decode";
 import http from "./httpService";
-import { apiUrl } from "../config.json";
 
 const tokenKey = "token";
 
 async function register(user) {
-  const response = await http.post(`${apiUrl}/users`, user);
+  const response = await http.post("/users", user);
   const jwt = response.headers["x-auth-token"];
   localStorage.setItem(tokenKey, jwt);
 
@@ -13,7 +12,7 @@ async function register(user) {
 }
 
 async function login(credentials) {
-  const { data: jwt } = await http.post(`${apiUrl}/auth`, credentials);
+  const { data: jwt } = await http.post("auth", credentials);
   if (jwt) localStorage.setItem(tokenKey, jwt);
   return jwt;
 }
